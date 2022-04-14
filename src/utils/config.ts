@@ -11,6 +11,7 @@ import { initCache } from './cache'
 import { preset } from './web-preset'
 import { slowConnection } from './env'
 import { isUndefined, noop, mergeObjects } from './helper'
+import { serialize } from './serialize'
 
 // error retry
 const onErrorRetry = (
@@ -68,6 +69,7 @@ export const defaultConfig: FullConfiguration = mergeObjects(
     loadingTimeout: slowConnection ? 5000 : 3000,
 
     // providers
+    serialize,
     compare: (currentData: any, newData: any) =>
       stableHash(currentData) == stableHash(newData),
     isPaused: () => false,

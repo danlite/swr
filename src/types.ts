@@ -1,4 +1,5 @@
 import * as revalidateEvents from './constants/revalidate-events'
+import { serialize } from './utils/serialize'
 
 export type FetcherResponse<Data = unknown> = Data | Promise<Data>
 export type BareFetcher<Data = unknown> = (
@@ -73,6 +74,7 @@ export interface PublicConfiguration<
   ) => void
   onDiscarded: (key: string) => void
 
+  serialize: typeof serialize
   compare: (a: Data | undefined, b: Data | undefined) => boolean
 
   isOnline: () => boolean
@@ -147,6 +149,7 @@ export type MutatorOptions<Data = any> = {
   populateCache?: boolean | ((result: any, currentData: Data) => Data)
   optimisticData?: Data | ((currentData?: Data) => Data)
   rollbackOnError?: boolean
+  serialize?: typeof serialize
 }
 
 export type Broadcaster<Data = any, Error = any> = (

@@ -2,7 +2,7 @@ import { useCallback, useRef, useDebugValue } from 'react'
 import { defaultConfig } from './utils/config'
 import { SWRGlobalState, GlobalState } from './utils/global-state'
 import { IS_SERVER, rAF, useIsomorphicLayoutEffect } from './utils/env'
-import { serialize } from './utils/serialize'
+import { serialize as internalSerialize } from './utils/serialize'
 import {
   isUndefined,
   UNDEFINED,
@@ -46,7 +46,8 @@ export const useSWRHandler = <Data = any, Error = any>(
     revalidateOnMount,
     refreshInterval,
     refreshWhenHidden,
-    refreshWhenOffline
+    refreshWhenOffline,
+    serialize
   } = config
 
   const [EVENT_REVALIDATORS, STATE_UPDATERS, MUTATION, FETCH] =
@@ -550,6 +551,6 @@ export const SWRConfig = OBJECT.defineProperty(ConfigProvider, 'default', {
   default: FullConfiguration
 }
 
-export const unstable_serialize = (key: Key) => serialize(key)[0]
+export const unstable_serialize = (key: Key) => internalSerialize(key)[0]
 
 export default withArgs<SWRHook>(useSWRHandler)

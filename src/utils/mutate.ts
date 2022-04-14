@@ -1,4 +1,4 @@
-import { serialize } from './serialize'
+import { serialize as internalSerialize } from './serialize'
 import { isFunction, isUndefined, mergeObjects, UNDEFINED } from './helper'
 import { SWRGlobalState, GlobalState } from './global-state'
 import { broadcastState } from './broadcast-state'
@@ -28,6 +28,7 @@ export const internalMutate = async <Data>(
   const revalidate = options.revalidate !== false
   const rollbackOnError = options.rollbackOnError !== false
   const customOptimisticData = options.optimisticData
+  const serialize = options.serialize || internalSerialize
 
   // Serilaize key
   const [key, , keyInfo] = serialize(_key)
